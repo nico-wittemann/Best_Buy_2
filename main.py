@@ -86,6 +86,9 @@ def get_item_and_quantity(product_list):
         return "break"
     try:
         quantity = int(quantity)
+        if quantity > Product.get_quantity(product_list[2]):
+            print(f"Just {Product.get_quantity(product_list[2])} left in stock. Product was not added.")
+            return
     except ValueError:
         print("Invalid input.")
         return
