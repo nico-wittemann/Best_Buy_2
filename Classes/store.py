@@ -2,9 +2,10 @@ from Classes.products import Product
 
 
 class Store():
-    list_of_products = []
+
 
     def __init__(self, initial_products=None):
+        self.list_of_products = []
         if initial_products:
             for product in initial_products:
                 self.list_of_products.append(product)

@@ -1,5 +1,4 @@
 class Product:
-    active = True
 
 
     def __init__(self, name, price, quantity):
@@ -15,7 +14,7 @@ class Product:
         except (ValueError, TypeError):
             print("Invalid price provided.")
         self.set_quantity(quantity)
-        self.active = Product.active
+        self.active = True
 
 
     def get_quantity(self):
@@ -71,5 +70,3 @@ class Product:
 
     def __str__(self):
         return f"{self.name}"
-
-
