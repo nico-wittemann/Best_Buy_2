@@ -1,4 +1,4 @@
-from Classes.products import Product
+from .products import Product
 
 
 class Store():

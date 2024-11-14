@@ -1,5 +1,4 @@
-from Classes.store import Store
-from Classes.products import Product
+from Classes import Store, Product
 
 
 def start(store, product_list):
@@ -107,6 +106,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-
-#Komments für functions
-#Ordner sortieren!
