@@ -9,10 +9,10 @@ class Product:
             raise ValueError("Name must not be empty")
         try:
             self.price = float(price)
-            if self.price < 0:
-                raise ValueError("Price must be greater than 0")
         except (ValueError, TypeError):
-            print("Invalid price provided.")
+            raise ValueError("Price must be a valid number")
+        if self.price < 0:
+            raise ValueError("Price must be greater than 0")
         self.set_quantity(quantity)
         self.active = True
 
@@ -28,12 +28,13 @@ class Product:
         If quantity reaches 0, deactivates the product."""
         try:
             self.quantity = int(quantity)
-            if self.quantity < 0:
-                raise ValueError("Quantity must not be negative")
         except (ValueError, TypeError):
-            print("Invalid quantity provided")
+            raise ValueError("Invalid quantity provided")
+        if self.quantity < 0:
+            raise ValueError("Quantity must not be negative")
         if self.quantity == 0:
             self.deactivate()
+
 
 
     def is_active(self):
