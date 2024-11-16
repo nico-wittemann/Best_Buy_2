@@ -1,4 +1,4 @@
-from Classes import Store, Product
+from Classes import Store, Product, NonStockedProduct, LimitedProduct
 
 
 def start(store, product_list):
@@ -71,7 +71,7 @@ def get_item_and_quantity(product_list):
         return "break"
     try:
         product_number = int(product_number)
-        if product_number > len(product_list):
+        if product_number > len(product_list) or product_number <= 0:
             print("Invalid input. Pick a number from the list.")
             return
         index = product_number - 1
@@ -85,9 +85,14 @@ def get_item_and_quantity(product_list):
         return "break"
     try:
         quantity = int(quantity)
-        if quantity > Product.get_quantity(product_list[2]):
-            print(f"Just {Product.get_quantity(product_list[2])} left in stock. Product was not added.")
-            return
+        if isinstance(ordered_product, LimitedProduct):
+            if quantity > ordered_product.get_maximum():
+                print(f"Quantity extends maximum allowed ({ordered_product.get_maximum()})")
+                return
+        if ordered_product.get_quantity():
+            if quantity > ordered_product.get_quantity():
+                print(f"Just {ordered_product.get_quantity()} left in stock. Product was not added.")
+                return
     except ValueError:
         print("Invalid input.")
         return
@@ -97,7 +102,9 @@ def get_item_and_quantity(product_list):
 def main():
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                    Product("Google Pixel 7", price=500, quantity=250)
+                    Product("Google Pixel 7", price=500, quantity=250),
+                    NonStockedProduct("Windows License", price=125),
+                    LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                     ]
     store = Store(product_list)
     start(store, product_list)

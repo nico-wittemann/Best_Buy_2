@@ -1,6 +1,5 @@
 class Product:
 
-
     def __init__(self, name, price, quantity):
         """Get name price and quantity from user and check for valid input with exceptions.
         Set active of new item to default True."""
@@ -34,7 +33,6 @@ class Product:
             raise ValueError("Quantity must not be negative")
         if self.quantity == 0:
             self.deactivate()
-
 
 
     def is_active(self):
@@ -71,3 +69,67 @@ class Product:
 
     def __str__(self):
         return f"{self.name}"
+
+
+class NonStockedProduct(Product):
+
+    def __init__(self, name, price):
+            """Get name price and quantity from user and check for valid input with exceptions.
+            Set active of new item to default True. Initialize a product with quantity always set to 0."""
+            self.name = str(name)
+            if self.name == "":
+                raise ValueError("Name must not be empty")
+            try:
+                self.price = float(price)
+            except (ValueError, TypeError):
+                raise ValueError("Price must be a valid number")
+            if self.price < 0:
+                raise ValueError("Price must be greater than 0")
+            self.active = True
+            self.quantity = 0
+
+
+    def get_quantity(self):
+        """Return False because there is no quantity."""
+        return False
+
+
+    def set_quantity(self, quantity):
+        """Raise an exception because quantity is irrelevant."""
+        raise AttributeError("Quantity cannot be set for this product type.")
+
+
+    def show(self):
+        """Returns a string that presents the product, in this case no quantity, cause its digital."""
+        return f"{self.name}, Price: {self.price}"
+
+
+    def buy(self, quantity):
+        """Get a quantity and check if its negative. Return the price of purchase."""
+        if quantity < 0:
+            raise ValueError("Quantity must not be negative")
+        return self.price * quantity
+
+
+class LimitedProduct(Product):
+
+    def __init__(self, name, price, quantity, maximum):
+        """Get name price and quantity from user and check for valid input with exceptions.
+        Set active of new item to default True."""
+        super().__init__(name, price, quantity)
+        try:
+            self.maximum = int(maximum)
+        except (ValueError, TypeError):
+            raise ValueError("Maximum must be a valid number")
+        if self.price < 0:
+            raise ValueError("Maximum must be greater than 0")
+
+
+    def show(self):
+        """Returns a string that presents the product"""
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Maximum: {self.maximum}"
+
+
+    def get_maximum(self):
+        return self.maximum
+
