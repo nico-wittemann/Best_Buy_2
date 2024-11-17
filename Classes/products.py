@@ -88,7 +88,7 @@ class Product:
 
 class NonStockedProduct(Product):
 
-    def __init__(self, name, price):
+    def __init__(self, name, price): #Note Teacher: I had to call it again, cause we use Products and self.set_quantity(quantity) cant be called here.
             """Get name price and quantity from user and check for valid input with exceptions.
             Set active of new item to default True. Initialize a product with quantity always set to 0."""
             self.name = str(name)
