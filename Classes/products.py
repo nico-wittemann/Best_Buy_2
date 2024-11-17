@@ -14,6 +14,17 @@ class Product:
             raise ValueError("Price must be greater than 0")
         self.set_quantity(quantity)
         self.active = True
+        self.promotion = None
+
+
+    def get_promotion(self):
+        """Returns the promotion assigned to this product."""
+        return self.promotion
+
+
+    def set_promotion(self, promotion):
+        """Assigns a promotion to this product."""
+        self.promotion = promotion
 
 
     def get_quantity(self):
@@ -53,8 +64,10 @@ class Product:
 
     def show(self):
         """Returns a string that presents the product"""
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
-
+        info =  f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        if self.promotion:
+            info += f", Promotion: {self.promotion.name}"
+        return info
 
     def buy(self, quantity):
         """Get a quantity and check if its to high or negative. Decrease self.quantity by the
@@ -63,6 +76,8 @@ class Product:
             raise ValueError("Quantity is too high")
         if quantity < 0:
             raise ValueError("Quantity must not be negative")
+        if self.promotion:
+            return self.promotion.apply_promotion(self, quantity)
         self.set_quantity(self.quantity - quantity)
         return self.price * quantity
 
@@ -101,13 +116,18 @@ class NonStockedProduct(Product):
 
     def show(self):
         """Returns a string that presents the product, in this case no quantity, cause its digital."""
-        return f"{self.name}, Price: {self.price}"
+        info = f"{self.name}, Price: {self.price}"
+        if self.promotion:
+            info += f", Promotion: {self.promotion.name}"
+        return info
 
 
     def buy(self, quantity):
         """Get a quantity and check if its negative. Return the price of purchase."""
         if quantity < 0:
             raise ValueError("Quantity must not be negative")
+        if self.promotion:
+            return self.promotion.apply_promotion(self, quantity)
         return self.price * quantity
 
 
@@ -127,9 +147,13 @@ class LimitedProduct(Product):
 
     def show(self):
         """Returns a string that presents the product"""
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Maximum: {self.maximum}"
+        info = f"{self.name}, Price: {self.price}, Quantity: {self.quantity}, Maximum: {self.maximum}"
+        if self.promotion:
+            info += f", Promotion: {self.promotion.name}"
+        return info
 
 
     def get_maximum(self):
+        """Returns the maximum quantity thats allowed in an order."""
         return self.maximum
 
