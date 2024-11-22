@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Best Buy 2.iml" filepath="$PROJECT_DIR$/.idea/Best Buy 2.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/bestbuy.iml" filepath="$PROJECT_DIR$/.idea/bestbuy.iml" />
+>>>>>>> 478b9929eab32782a3d755f088af077ff6497e22
     </modules>
   </component>
 </project>
